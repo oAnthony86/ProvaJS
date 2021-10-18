@@ -1,14 +1,14 @@
 export default class Response {
-    public status: boolean;
-    public data: unknown;
-    public messages: string;
-    public exception: string;
+    public Status: boolean;
+    public Data: any;
+    public Messages: string;
+    public Exception: string;
 
-    constructor(status: boolean, data: unknown, mess: string, exception: string) {
-        this.status = status;
-        this.data = data;
-        this.messages = mess;
-        this.exception = exception;
+    constructor(status: boolean, data: any, mess: string, exception: string) {
+        this.Status = status;
+        this.Data = data;
+        this.Messages = mess;
+        this.Exception = exception;
     }
 
 }
