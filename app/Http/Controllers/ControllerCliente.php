@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Exception;
 
 class ControllerCliente extends Controller
 {
@@ -10,44 +11,38 @@ class ControllerCliente extends Controller
 
     }
 
-    public function index() {
-
-    }
-
-    public function create() {
-
-    }
-
-    public function edit() {
-
-    }
-
-    public function show() {
-
-    }
-
     public function store(Request $request) {
-        $clientes = Cliente::store([
-            'nome' => $request->nome,
-        ])
+        $cliente = Cliente::store([
+            'NomeCompleto' => $request->nomeCompleto,
+            'CPF' => $request->cpf,
+            'DataNascimento' => $request->dataNascimento,
+            'Sexo' => $request->sexo,
+            'Cidade' => $request->cidade,
+            'Estado' => $request->estado
+        ]);
     }
 
     public function update(Request $request) {
         $clientes = Cliente::where('id', $request->id)->update([
-            'nome' => $request->nome,
-        ])
+            'NomeCompleto' => $request->nomeCompleto,
+            'CPF' => $request->cpf,
+            'DataNascimento' => $request->dataNascimento,
+            'Sexo' => $request->sexo,
+            'Cidade' => $request->cidade,
+            'Estado' => $request->estado
+        ]);
     }
 
     public function delete(Request $request) {
-        $clientes =Cliente::where('id', $request->id)->delete();
+        $cliente =Cliente::where('id', $request->id)->delete();
     }
 
     public function list(Request $request) {
         try {
-            if (isset($request->cliente_id)) {
-                $clientes = Cliente::where('id', $request->cliente_id)->get()->first();
+            if (isset($request->id)) {
+                $cliente = Cliente::where('id', $request->id)->get()->first();
                 return response()->json([
-                    'data' => $clientes
+                    'data' => $cliente
                 ], 200);
             } else {
                 $clientes = Cliente::get();
@@ -56,12 +51,15 @@ class ControllerCliente extends Controller
                 ], 200);
             }
 
-        } catch(Exception e) {
-
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha ao buscar lista de clientes",
+                'error' => $e->getMessage()
+            ], 400);
         }
 
     }
 
 
-    
+
 }

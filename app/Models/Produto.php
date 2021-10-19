@@ -5,22 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Produto extends Model
 {
     use HasFactory;
 
-    public $table = 'Cliente';
+    public $table = 'Produto';
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'NomeCompleto',
-        'CPF',
-        'DataNascimento',
-        'Sexo',
-        'Cidade',
-        'Estado',
+        'Id',
+        'CodigoBarra',
+        'Descricao',
+        'Preco'
     ];
 }
