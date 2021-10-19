@@ -9,7 +9,7 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    public $table = 'clientes';
+    public $table = 'Cliente';
     /**
      * The attributes that are mass assignable.
      *
