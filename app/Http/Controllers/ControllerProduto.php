@@ -14,25 +14,55 @@ class ControllerProduto extends Controller
 
     public function store(Request $request)
     {
-        $produto = Produto::store([
-            'CodigoBarra' => $request->codigoBarra,
-            'Descricao' => $request->descricao,
-            'Preco' => $request->preco
-        ]);
+        try{
+            $produto = Produto::store([
+                'CodigoBarra' => $request->codigoBarra,
+                'Descricao' => $request->descricao,
+                'Preco' => $request->preco
+            ]);
+            return response()->json([
+                'data' => $produto
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha no cadastro de produto",
+                'error'   => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function update(Request $request)
     {
-        $produto = Produto::where('id', $request->id)->update([
-            'CodigoBarra' => $request->codigoBarra,
-            'Descricao' => $request->descricao,
-            'Preco' => $request->preco
-        ]);
+        try{
+            $produto = Produto::where('id', $request->id)->update([
+                'CodigoBarra' => $request->codigoBarra,
+                'Descricao' => $request->descricao,
+                'Preco' => $request->preco
+            ]);
+            return response()->json([
+                'data' => $produto
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha ao atualizar produto",
+                'error'   => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function delete(Request $request)
     {
-        $prouto = Produto::where('id', $request->id)->delete();
+        try{
+            $produto = Produto::where('id', $request->id)->delete();
+            return response()->json([
+                'data' => $produto
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha ao deletar produto",
+                'error'   => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function list(Request $request)

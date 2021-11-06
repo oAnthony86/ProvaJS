@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Pedido extends Model
 {
     use HasFactory;
 
-    public $table = 'cliente';
+    public $table = 'pedido';
     /**
      * The attributes that are mass assignable.
      *
@@ -17,11 +17,10 @@ class Cliente extends Model
      */
     protected $fillable = [
         'id',
-        'NomeCompleto',
-        'CPF',
-        'DataNascimento',
-        'Sexo',
-        'Cidade',
-        'Estado',
+        'ClienteId',
+        'TransportadoraId',
+        'DataEmissao',
+        'DataEntrega',
+        'ValorTotal',
     ];
 }

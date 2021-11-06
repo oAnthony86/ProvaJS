@@ -15,6 +15,12 @@ class CreateTransportadoraTable extends Migration
     {
         Schema::create('transportadora', function (Blueprint $table) {
             $table->id();
+
+            $table->string('CNPJ', 14);
+            $table->string('Descricao');
+            $table->string('Cidade');
+            $table->string('Estado', 2);
+
             $table->timestamps();
         });
     }

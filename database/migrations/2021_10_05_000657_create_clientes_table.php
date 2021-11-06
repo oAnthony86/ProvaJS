@@ -22,6 +22,7 @@ class CreateClientesTable extends Migration
             $table->string('sexo');
             $table->string('cidade');
             $table->string('estado');      
+            
             $table->timestamps();
         });
     }

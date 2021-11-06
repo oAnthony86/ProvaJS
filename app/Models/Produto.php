@@ -9,14 +9,14 @@ class Produto extends Model
 {
     use HasFactory;
 
-    public $table = 'Produto';
+    public $table = 'produto';
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'Id',
+        'id',
         'CodigoBarra',
         'Descricao',
         'Preco'

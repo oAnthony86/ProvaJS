@@ -15,6 +15,15 @@ class CreatePedidoItemTable extends Migration
     {
         Schema::create('pedido_item', function (Blueprint $table) {
             $table->id();
+
+            $table->integer('ProdutoId');
+            $table->integer('PedidoId');
+            $table->integer('Quantidade');
+            $table->decimal('ValorUnitario');
+
+            $table->foreign('ProdutoId')->references('id')->on('produto');
+            $table->foreign('PedidoId')->references('id')->on('pedido');
+
             $table->timestamps();
         });
     }

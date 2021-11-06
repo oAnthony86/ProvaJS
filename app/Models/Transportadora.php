@@ -9,14 +9,14 @@ class Transportadora extends Model
 {
     use HasFactory;
 
-    public $table = 'Transportadora';
+    public $table = 'transportadora';
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'Id',
+        'id',
         'CNPJ',
         'Descricao',
         'Cidade',

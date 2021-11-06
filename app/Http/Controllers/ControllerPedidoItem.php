@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Cliente;
+use App\Models\PedidoItem;
 use Illuminate\Http\Request;
 use Exception;
 
-class ControllerCliente extends Controller
+class ControllerPedidoItem extends Controller
 {
     public function __construct() {
 
@@ -13,41 +13,39 @@ class ControllerCliente extends Controller
 
     public function store(Request $request) {
         try{
-            $cliente = Cliente::store([
-                'NomeCompleto'   => $request->nomeCompleto,
-                'CPF'            => $request->cpf,
-                'DataNascimento' => $request->dataNascimento,
-                'Sexo'           => $request->sexo,
-                'Cidade'         => $request->cidade,
-                'Estado'         => $request->estado
+            $pedidoitem = PedidoItem::create([
+                'ProdutoId'     => $request->produtoId,
+                'PedidoId'      => $request->pedidoId,
+                'Quantidade'    => $request->quantidade,
+                'ValorUnitario' => $request->valorUnitario
             ]);
             return response()->json([
-                'data' => $cliente
+                'data' => $pedidoitem
             ],200);
         }catch (Exception $e) {
             return response()->json([
-                'message' => "Falha no cadastro de cliente",
+                'message' => "Falha no cadastro de item do pedido",
                 'error'   => $e->getMessage()
             ], 400);
         }
     }
 
     public function update(Request $request) {
-        try{
-            $cliente = Cliente::where('id', $request->id)->update([
+        try {
+            $pedidoitem = PedidoItem::where('id', $request->id)->update([
                 'NomeCompleto'   => $request->nomeCompleto,
                 'CPF'            => $request->cpf,
                 'DataNascimento' => $request->dataNascimento,
                 'Sexo'           => $request->sexo,
                 'Cidade'         => $request->cidade,
                 'Estado'         => $request->estado
-            ]);
+            ]); 
             return response()->json([
-                'data' => $cliente
+                'data' => $pedidoitem
             ],200);
         }catch (Exception $e) {
             return response()->json([
-                'message' => "Falha ao atualizar cliente",
+                'message' => "Falha ao atualizar item do pedido",
                 'error'   => $e->getMessage()
             ], 400);
         }
@@ -55,13 +53,13 @@ class ControllerCliente extends Controller
 
     public function delete(Request $request) {
         try{
-            $cliente =Cliente::where('id', $request->id)->delete();
+            $pedidoitem =PedidoItem::where('id', $request->id)->delete();
             return response()->json([
-                'data' => $cliente
+                'data' => $pedidoitem
             ],200);
         }catch (Exception $e) {
             return response()->json([
-                'message' => "Falha ao deletar cliente",
+                'message' => "Falha ao deletar item do pedido",
                 'error'   => $e->getMessage()
             ], 400);
         }
@@ -70,20 +68,20 @@ class ControllerCliente extends Controller
     public function list(Request $request) {
         try {
             if (isset($request->id)) {
-                $cliente = Cliente::where('id', $request->id)->get()->first();
+                $pedidoitem = PedidoItem::where('id', $request->id)->get()->first();
                 return response()->json([
-                    'data' => $cliente
+                    'data' => $pedidoitem
                 ], 200);
             } else {
-                $clientes = Cliente::get();
+                $pedidoitens = PedidoItem::get();
                 return response()->json([
-                    'data' => $clientes
+                    'data' => $pedidoitens
                 ], 200);
             }
 
         } catch (Exception $e) {
             return response()->json([
-                'message' => "Falha ao buscar lista de clientes",
+                'message' => "Falha ao buscar lista de item do pedido",
                 'error' => $e->getMessage()
             ], 400);
         }

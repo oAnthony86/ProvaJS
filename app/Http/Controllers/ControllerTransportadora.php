@@ -14,27 +14,57 @@ class ControllerTransportadora extends Controller
 
     public function store(Request $request)
     {
-        $transportadora = Transportadora::store([
-            'CNPJ' => $request->cnpj,
-            'Descricao' => $request->descricao,
-            'Cidade' => $request->cidade,
-            'Estado' => $request->estado
-        ]);
+        try{
+            $transportadora = Transportadora::store([
+                'CNPJ'      => $request->cnpj,
+                'Descricao' => $request->descricao,
+                'Cidade'    => $request->cidade,
+                'Estado'    => $request->estado
+            ]);
+            return response()->json([
+                'data' => $transportadora
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha no cadastro de transportadora",
+                'error'   => $e->getMessage()
+            ], 400);
+    }
     }
 
     public function update(Request $request)
-    {
-        $transportadora = Transportadora::where('id', $request->id)->update([
-            'CNPJ' => $request->cnpj,
-            'Descricao' => $request->descricao,
-            'Cidade' => $request->cidade,
-            'Estado' => $request->estado
-        ]);
+    {   
+        try{
+            $transportadora = Transportadora::where('id', $request->id)->update([
+                'CNPJ'      => $request->cnpj,
+                'Descricao' => $request->descricao,
+                'Cidade'    => $request->cidade,
+                'Estado'    => $request->estado
+            ]);
+            return response()->json([
+                'data' => $transportadora
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha na atualização de transportadora",
+                'error'   => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function delete(Request $request)
     {
-        $transportadora = Transportadora::where('id', $request->id)->delete();
+        try{
+            $transportadora = Transportadora::where('id', $request->id)->delete();
+            return response()->json([
+                'data' => $transportadora
+            ],200);
+        }catch (Exception $e) {
+            return response()->json([
+                'message' => "Falha ao deletar transportadora",
+                'error'   => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function list(Request $request)
