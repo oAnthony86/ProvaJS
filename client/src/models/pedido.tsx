@@ -1,13 +1,27 @@
-export default class Produto {
+import Cliente from './cliente';
+import Transportadora from './transportadora';
+import PedidoItem from './pedidoItem';
+export default class Pedido {
     id?: number;
-    codigoBarra: string;
-    descricao: string;
-    preco: number;
+    clienteId: number;
+    transportadoraId: number;
+    dataEmissao: string;
+    dataEntrega: string;
+    valorTotal: number;
+    cliente?: Cliente;
+    transportadora?: Transportadora;
+    pedidoItem: Array<PedidoItem>;
 
-    constructor(id: number, codigoBarra: string, descricao: string, preco: number) {
+    constructor(id: number, clienteId: number, transportadoraId: number, dataEmissao: string, dataEntrega: string, valorTotal: number, cliente: Cliente, transportadora: Transportadora, pedidoItem: Array<PedidoItem>) {
         this.id = id;
-        this.codigoBarra = codigoBarra;
-        this.descricao = descricao;
-        this.preco = preco;
+        this.clienteId = clienteId;
+        this.transportadoraId = transportadoraId;
+        this.dataEmissao = dataEmissao;
+        this.dataEntrega = dataEntrega;
+        this.valorTotal = valorTotal;
+        this.cliente = cliente;
+        this.transportadora = transportadora;
+        this.pedidoItem = pedidoItem;
     }
+
 }

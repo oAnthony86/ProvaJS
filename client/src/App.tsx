@@ -22,6 +22,7 @@ import ProdutoEdit from './pages/produto/edit';
 import PedidoIndex from './pages/pedido/index';
 import PedidoCreate from './pages/pedido/create';
 import PedidoEdit from './pages/pedido/edit';
+import PedidoDetail from './pages/pedido/detail';
 
 const App: React.FC = () => {
     return (
@@ -46,6 +47,7 @@ const App: React.FC = () => {
                     <Route exact path='/pedido' component={PedidoIndex} />
                     <Route path='/pedido/create' component={PedidoCreate} />
                     <Route path='/pedido/edit/:id' component={PedidoEdit} />
+                    <Route path='/pedido/detail/:id' component={PedidoDetail} />
 
                     <Route path='/' component={Home} />
                 </Switch>

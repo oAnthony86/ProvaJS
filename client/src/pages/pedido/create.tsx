@@ -1,8 +1,10 @@
 import React from 'react';
 import * as toastr from 'toastr';
-import Produto from "../../models/produto";
 import BaseService from "../../service/base.service";
-import { ProdutoForm } from './produtoForm';
+import Pedido from "../../models/pedido";
+import Cliente from "../../models/cliente";
+import Transportadora from "../../models/transportadora";
+import { PedidoForm } from './pedidoForm';
 
 interface IProps {
     history: History;
@@ -17,7 +19,9 @@ interface IProps {
     }
 }
 interface IState {
-    produto: Produto
+    pedido: Pedido,
+    clienteList: Array<Cliente>,
+    transportadoraList: Array<Transportadora>
 }
 
 
@@ -26,40 +30,80 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            produto: {
+            pedido: {
                 id: 0,
-                codigoBarra: '',
-                descricao: '',
-                preco: 0
-            }
+                clienteId: 0,
+                transportadoraId: 0,
+                dataEmissao: '',
+                dataEntrega: '',
+                valorTotal: 0,
+                cliente: undefined,
+                transportadora: undefined,
+                pedidoItem: []
+            },
+            clienteList: [],
+            transportadoraList: []
         }
+
+        BaseService.getAll<Cliente>("/Cliente").then((rp) => {
+            if (rp.Status) {
+                const data = rp.Data;
+                var clienteLista: Array<Cliente> = [];
+                (data || []).forEach((p: any) => {
+                    clienteLista.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
+                });
+                this.setState({
+                    ...this.state,
+                    clienteList: clienteLista
+                });
+            }
+        });
+
+        BaseService.getAll<Transportadora>("/Transportadora").then((rp) => {
+            if (rp.Status) {
+                const data = rp.Data;
+                var transportadoraLista: Array<Transportadora> = [];
+                (data || []).forEach((p: any) => {
+                    transportadoraLista.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
+                });
+                this.setState({
+                    ...this.state,
+                    transportadoraList: transportadoraLista
+                });
+            }
+        });
         this.onFieldValueChange = this.onFieldValueChange.bind(this);
     }
 
     private onFieldValueChange(fieldName: string, value: string) {
         const nextState = {
             ...this.state,
-            produto: {
-                ...this.state.produto,
+            pedido: {
+                ...this.state.pedido,
                 [fieldName]: value,
             }
         };
 
         this.setState(nextState);
     }
+
     private onSave = () => {
-        BaseService.create<Produto>("/Produto", this.state.produto).then(
+        BaseService.create<Pedido>("/Pedido", this.state.pedido).then(
             (rp) => {
                 if (rp.Status) {
-                    toastr.success('Nova Produto Inserido com Sucesso.');
-
+                    toastr.success('Novo Pedido Inserido com Sucesso.');
 
                     this.setState({
-                        produto: {
+                        pedido: {
                             id: 0,
-                            codigoBarra: '',
-                            descricao: '',
-                            preco: 0
+                            clienteId: 0,
+                            transportadoraId: 0,
+                            dataEmissao: '',
+                            dataEntrega: '',
+                            valorTotal: 0,
+                            cliente: undefined,
+                            transportadora: undefined,
+                            pedidoItem: []
                         }
                     });
 
@@ -75,8 +119,10 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <ProdutoForm
-                produto={this.state.produto}
+            <PedidoForm
+                pedido={this.state.pedido}
+                clienteList={this.state.clienteList}
+                transportadoraList={this.state.transportadoraList}
                 onChange={this.onFieldValueChange}
                 onSave={this.onSave}
             />

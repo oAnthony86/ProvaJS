@@ -44,9 +44,6 @@ export default class ClienteEdit extends React.Component<IProps, IState> {
 
     }
 
-
-
-
     private onFieldValueChange(fieldName: string, value: string) {
         const nextState = {
             ...this.state,

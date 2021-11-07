@@ -42,9 +42,6 @@ export default class TransportadoraEdit extends React.Component<IProps, IState> 
 
     }
 
-
-
-
     private onFieldValueChange(fieldName: string, value: string) {
         const nextState = {
             ...this.state,

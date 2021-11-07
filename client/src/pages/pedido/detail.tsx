@@ -7,7 +7,7 @@ import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
 import Produto from "../../models/produto";
 import PedidoItem from "../../models/pedidoItem";
-import { PedidoForm } from './pedidoForm';
+import { PedidoShow } from './pedidoShow';
 
 
 interface IProps {
@@ -23,13 +23,11 @@ interface IProps {
     }
 }
 interface IState {
-    pedido: Pedido,
-    clienteList: Array<Cliente>,
-    transportadoraList: Array<Transportadora>
+    pedido: Pedido
 }
 
 
-export default class PedidoEdit extends React.Component<IProps, IState> {
+export default class PedidoDetail extends React.Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
@@ -45,28 +43,8 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
                 cliente: undefined,
                 transportadora: undefined,
                 pedidoItem: []
-            },
-            clienteList: [],
-            transportadoraList: []
+            }
         }
-
-        BaseService.getAll<Cliente>("/Cliente").then((rp) => {
-            if (rp.Status) {
-                const data = rp.Data;
-                (data || []).forEach((p: any) => {
-                    this.state.clienteList.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
-                });
-            }
-        });
-
-        BaseService.getAll<Transportadora>("/Transportadora").then((rp) => {
-            if (rp.Status) {
-                const data = rp.Data;
-                (data || []).forEach((p: any) => {
-                    this.state.transportadoraList.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
-                });
-            }
-        });
         this.onFieldValueChange = this.onFieldValueChange.bind(this);
     }
 
@@ -103,7 +81,7 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
                             p.cliente.id,
                             p.cliente.nomeCompleto,
                             p.cliente.cpf,
-                            p.cliente.dataNascimento,
+                            this.getParsedDate(p.cliente.dataNascimento),
                             p.cliente.sexo,
                             p.cliente.cidade,
                             p.cliente.estado
@@ -143,31 +121,10 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
         );
     }
 
-
-    private onSave = () => {
-        BaseService.update<Pedido>("/Pedido", this.state.pedido).then(
-            (rp) => {
-                if (rp.Status) {
-                    toastr.success('Pedido Alterado com Sucesso.');
-                    this.props.history.goBack();
-                } else {
-                    toastr.error(rp.Messages);
-                    console.log("Messages: " + rp.Messages);
-                    console.log("Exception: " + rp.Exception);
-                }
-            }
-        );
-
-    }
-
     render() {
         return (
-            <PedidoForm
+            <PedidoShow
                 pedido={this.state.pedido}
-                clienteList={this.state.clienteList}
-                transportadoraList={this.state.transportadoraList}
-                onChange={this.onFieldValueChange}
-                onSave={this.onSave}
             />
         );
     }

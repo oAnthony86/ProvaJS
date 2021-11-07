@@ -1,8 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import TableRow from "./TableRow";
-import Pedido from "../../models/pedido";
 import BaseService from "../../service/base.service";
+import Pedido from "../../models/pedido";
+import Cliente from "../../models/cliente";
+import Transportadora from "../../models/transportadora";
+import PedidoItem from "../../models/pedidoItem";
+import Produto from "../../models/produto";
 
 interface IProps { }
 
@@ -36,7 +40,47 @@ class PedidoIndex extends React.Component<IProps, IState> {
                 const listPedidos = new Array<Pedido>();
 
                 (data || []).forEach((p: any) => {
-                    listPedidos.push(new Pedido(p.id, p.codigoBarra, p.descricao, p.preco));
+                    var pedido = new Pedido(
+                        p.id,
+                        p.clienteId,
+                        p.transportadoraId,
+                        p.dataEmissao,
+                        p.dataEntrega,
+                        p.valorTotal,
+                        new Cliente(
+                            p.cliente.id,
+                            p.cliente.nomeCompleto,
+                            p.cliente.cpf,
+                            p.cliente.dataNascimento,
+                            p.cliente.sexo,
+                            p.cliente.cidade,
+                            p.cliente.estado
+                        ),
+                        new Transportadora(
+                            p.transportadora.id,
+                            p.transportadora.cnpj,
+                            p.transportadora.descricao,
+                            p.transportadora.cidade,
+                            p.transportadora.estado
+                        ),
+                        []
+                    );
+                    (p.pedidoItem || []).forEach((pi: any) => {
+                        pedido.pedidoItem.push(new PedidoItem(
+                            pi.id,
+                            pi.produtoId,
+                            pi.quantidade,
+                            pi.valorUnitario,
+                            new Produto(
+                                pi.produto.id,
+                                pi.produto.codigoBarra,
+                                pi.produto.descricao,
+                                pi.produto.preco
+                            )
+                        ));
+                    });
+
+                    listPedidos.push(pedido);
                 });
 
                 this.setState({ listPedidos: listPedidos });
@@ -75,7 +119,7 @@ class PedidoIndex extends React.Component<IProps, IState> {
         }
 
         return this.state.listPedidos.map(function (object, i) {
-            return <TableRow key={i} index={i + 1} Pedido={object} />;
+            return <TableRow key={i} index={i + 1} pedido={object} />;
         });
     };
 
@@ -89,9 +133,12 @@ class PedidoIndex extends React.Component<IProps, IState> {
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
-                            <th>Código de Barras</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Transportadora</th>
+                            <th>Data de Emissão</th>
+                            <th>Data de Entrega</th>
+                            <th>Valor Total</th>
                             <th className="text-center" colSpan={2}>
                                 Ações
                             </th>
