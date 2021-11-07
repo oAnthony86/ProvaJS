@@ -4,10 +4,11 @@ import Produto from "../../models/produto";
 import { Button } from '../../common/components/form';
 
 interface Props {
+    index: number;
     pedidoItem: PedidoItem;
     produtoList: Array<Produto>;
-    onChange: (fieldName: string, value: string) => void;
-    remove: () => void;
+    onChange: (index: number, fieldName: string, value: string) => void;
+    onRemove: () => void;
 }
 
 export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
@@ -33,7 +34,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.produtoId}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                                props.onChange(e.target.name, e.target.value);
+                                props.onChange(props.index, e.target.name, e.target.value);
                             }}
                         >
                             {
@@ -50,7 +51,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.quantidade}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                props.onChange(e.target.name, e.target.value);
+                                props.onChange(props.index, e.target.name, e.target.value);
                             }}
                         />
                     </div>
@@ -62,7 +63,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.valorUnitario}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                props.onChange(e.target.name, e.target.value);
+                                props.onChange(props.index, e.target.name, e.target.value);
                             }}
                         />
                     </div>
@@ -70,7 +71,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                         <Button
                             label="Adicionar"
                             className="btn btn-success mt-2"
-                            onClick={props.remove}
+                            onClick={props.onRemove}
                         />
                     </div>
                 </div>

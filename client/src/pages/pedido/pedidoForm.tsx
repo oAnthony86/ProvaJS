@@ -3,17 +3,29 @@ import { Link } from 'react-router-dom';
 import Pedido from "../../models/pedido";
 import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
+import Produto from "../../models/produto";
 import { Button } from '../../common/components/form';
+import { ProdutoFormAdd } from './produtoFormAdd';
 
 interface Props {
     pedido: Pedido;
     clienteList: Array<Cliente>,
-    transportadoraList: Array<Transportadora>
+    transportadoraList: Array<Transportadora>,
+    produtoList: Array<Produto>
     onChange: (fieldName: string, value: string) => void;
     onSave: () => void;
 }
 
 export const PedidoForm: React.FunctionComponent<Props> = (props) => {
+
+    function onChangeProduto(index: number, fieldName: string, value: string){
+
+    }
+
+    function onRemoveProduto(){
+
+    }
+
     return (
         <>
             <h3 className="text-center">Gerenciamento de Pedidos</h3>
@@ -98,6 +110,12 @@ export const PedidoForm: React.FunctionComponent<Props> = (props) => {
                         }}
                     />
                 </div>
+
+                {
+                    props.pedido.pedidoItem.map((obj, i) => {
+                        return <ProdutoFormAdd key={i} index={i} pedidoItem={obj} produtoList={props.produtoList} onChange={onChangeProduto} onRemove={onRemoveProduto}/>
+                    })
+                }
 
                 <Button
                     label="Save"

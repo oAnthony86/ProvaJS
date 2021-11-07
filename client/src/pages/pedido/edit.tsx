@@ -25,7 +25,8 @@ interface IProps {
 interface IState {
     pedido: Pedido,
     clienteList: Array<Cliente>,
-    transportadoraList: Array<Transportadora>
+    transportadoraList: Array<Transportadora>,
+    produtoList: Array<Produto>
 }
 
 
@@ -47,14 +48,20 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
                 pedidoItem: []
             },
             clienteList: [],
-            transportadoraList: []
+            transportadoraList: [],
+            produtoList: []
         }
 
         BaseService.getAll<Cliente>("/Cliente").then((rp) => {
             if (rp.Status) {
                 const data = rp.Data;
+                var clienteLista: Array<Cliente> = [];
                 (data || []).forEach((p: any) => {
-                    this.state.clienteList.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
+                    clienteLista.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
+                });
+                this.setState({
+                    ...this.state,
+                    clienteList: clienteLista
                 });
             }
         });
@@ -62,8 +69,27 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
         BaseService.getAll<Transportadora>("/Transportadora").then((rp) => {
             if (rp.Status) {
                 const data = rp.Data;
+                var transportadoraLista: Array<Transportadora> = [];
                 (data || []).forEach((p: any) => {
-                    this.state.transportadoraList.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
+                    transportadoraLista.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
+                });
+                this.setState({
+                    ...this.state,
+                    transportadoraList: transportadoraLista
+                });
+            }
+        });
+
+        BaseService.getAll<Produto>("/Produto").then((rp) => {
+            if (rp.Status) {
+                const data = rp.Data;
+                var produtoLista: Array<Produto> = [];
+                (data || []).forEach((p: any) => {
+                    produtoLista.push(new Produto(p.id, p.codigoBarra, p.descricao, p.preco));
+                });
+                this.setState({
+                    ...this.state,
+                    produtoList: produtoLista
                 });
             }
         });
@@ -166,6 +192,7 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
                 pedido={this.state.pedido}
                 clienteList={this.state.clienteList}
                 transportadoraList={this.state.transportadoraList}
+                produtoList={this.state.produtoList}
                 onChange={this.onFieldValueChange}
                 onSave={this.onSave}
             />

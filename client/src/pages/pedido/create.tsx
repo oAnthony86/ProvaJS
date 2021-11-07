@@ -4,6 +4,7 @@ import BaseService from "../../service/base.service";
 import Pedido from "../../models/pedido";
 import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
+import Produto from "../../models/produto";
 import { PedidoForm } from './pedidoForm';
 
 interface IProps {
@@ -21,7 +22,8 @@ interface IProps {
 interface IState {
     pedido: Pedido,
     clienteList: Array<Cliente>,
-    transportadoraList: Array<Transportadora>
+    transportadoraList: Array<Transportadora>,
+    produtoList: Array<Produto>
 }
 
 
@@ -42,7 +44,8 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 pedidoItem: []
             },
             clienteList: [],
-            transportadoraList: []
+            transportadoraList: [],
+            produtoList: []
         }
 
         BaseService.getAll<Cliente>("/Cliente").then((rp) => {
@@ -69,6 +72,20 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 this.setState({
                     ...this.state,
                     transportadoraList: transportadoraLista
+                });
+            }
+        });
+
+        BaseService.getAll<Produto>("/Produto").then((rp) => {
+            if (rp.Status) {
+                const data = rp.Data;
+                var produtoLista: Array<Produto> = [];
+                (data || []).forEach((p: any) => {
+                    produtoLista.push(new Produto(p.id, p.codigoBarra, p.descricao, p.preco));
+                });
+                this.setState({
+                    ...this.state,
+                    produtoList: produtoLista
                 });
             }
         });
@@ -123,6 +140,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 pedido={this.state.pedido}
                 clienteList={this.state.clienteList}
                 transportadoraList={this.state.transportadoraList}
+                produtoList={this.state.produtoList}
                 onChange={this.onFieldValueChange}
                 onSave={this.onSave}
             />
