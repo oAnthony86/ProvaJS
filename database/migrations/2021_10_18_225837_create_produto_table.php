@@ -15,11 +15,9 @@ class CreateProdutoTable extends Migration
     {
         Schema::create('produto', function (Blueprint $table) {
             $table->id();
-
             $table->string('CodigoBarra');
             $table->string('Descricao');
-            $table->string('Preco');
-
+            $table->decimal('Preco');
             $table->timestamps();
         });
     }

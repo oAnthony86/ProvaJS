@@ -5,19 +5,26 @@ import axios from "axios";
 export default class BaseService {
     private static baseURL: string = "http://localhost:15505";
 
+    private static config = {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    };
+
 
     public static async getAll<T>(url: string): Promise<Response> {
-        let res = await axios.get<Array<T>>(this.baseURL + url)
+        let res = await axios.get<Array<T>>(this.baseURL + url, this.config)
             .then((response: any) => {
-                console.log(response);
                 const result = response.data;
-                if(result && result.success){
-                    return new Response(true, result.data  as Array<T>, "Success", "");
-                }else{
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text: "Error";
+
+                if (result) {
+                    return new Response(true, result as Array<T>, "Success", "");
+                } else {
+                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
                     return new Response(false, null, "Error", msg);
                 }
-              
+
             })
             .catch(function (error) {
                 return new Response(false, null, "Error", error);
@@ -26,13 +33,24 @@ export default class BaseService {
     }
 
     public static get<T>(url: string, param: any): Promise<Response> {
-        let res = axios.get<T>(this.baseURL + url + param)
+        let res = axios.get<T>(this.baseURL + url)
             .then((response: any) => {
                 const result = response.data;
-                if(result && result.success){
-                    return new Response(true, result.data , "Success", "");
-                }else{
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text: "Error";
+                if (result) {
+                    let dataResponse: any;
+                    (result || []).forEach((el: any) => {
+                        if (el.id.toString() === param) {
+                            dataResponse = el;
+                        }
+                    });
+
+                    if (dataResponse) {
+                        return new Response(true, dataResponse, "Success", "");
+                    } else {
+                        return new Response(false, null, "Error", "Registro não encontrado");
+                    }
+                } else {
+                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -43,14 +61,14 @@ export default class BaseService {
     }
     public static delete(url: string, param: any): Promise<Response> {
         console.log(param);
-        
-        let res = axios.delete(this.baseURL + url , { data: param })
-            .then(response => { 
+
+        let res = axios.delete(this.baseURL + url, { data: param })
+            .then(response => {
                 const result = response.data;
-                if(result && result.success){
-                    return new Response(true, result.data , "Success", "");
-                }else{
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text: "Error";
+                if (result) {
+                    return new Response(true, result.data, "Success", "");
+                } else {
+                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -61,13 +79,13 @@ export default class BaseService {
     }
     public static create<T>(url: string, obj: T): Promise<Response> {
 
-        let res = axios.post(this.baseURL + url ,obj)
+        let res = axios.post(this.baseURL + url, obj)
             .then(response => {
                 const result = response.data;
-                if(result && result.success){
-                    return new Response(true, result.data , "Success", "");
-                }else{
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text: "Error";
+                if (result) {
+                    return new Response(true, result.data, "Success", "");
+                } else {
+                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -76,15 +94,15 @@ export default class BaseService {
             });
         return res;
     }
-    public static update<T>(url: string, param: any, obj: T): Promise<Response> {
+    public static update<T>(url: string, obj: T): Promise<Response> {
 
-        let res = axios.post(this.baseURL + url + param, obj)
+        let res = axios.put(this.baseURL + url, obj)
             .then(response => {
                 const result = response.data;
-                if(result && result.success){
-                    return new Response(true, result.data , "Success", "");
-                }else{
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text: "Error";
+                if (result) {
+                    return new Response(true, result.data, "Success", "");
+                } else {
+                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
