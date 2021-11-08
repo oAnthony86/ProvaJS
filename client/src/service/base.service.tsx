@@ -1,15 +1,14 @@
 import Response from "../models/response";
 import axios from "axios";
+import authHeader from './auth.header';
 
 
 export default class BaseService {
     private static baseURL: string = "http://localhost:8000/api";
 
+
     private static config = {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        }
+        headers: authHeader()
     };
 
 

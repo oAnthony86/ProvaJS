@@ -7,7 +7,9 @@ interface Props {
     index: number;
     pedidoItem: PedidoItem;
     produtoList: Array<Produto>;
-    onChange: (index: number, fieldName: string, value: string) => void;
+    onChangeProduto: (produtoId: number) => void;
+    onChangeQuantidade: (quantidade: number) => void;
+    onChangeValor: (valor: number) => void;
     onRemove: () => void;
 }
 
@@ -34,7 +36,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.produtoId}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                                props.onChange(props.index, e.target.name, e.target.value);
+                                props.onChangeProduto(parseInt(e.target.value));
                             }}
                         >
                             {
@@ -51,7 +53,7 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.quantidade}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                props.onChange(props.index, e.target.name, e.target.value);
+                                props.onChangeQuantidade(parseInt(e.target.value));
                             }}
                         />
                     </div>
@@ -63,14 +65,14 @@ export const ProdutoFormAdd: React.FunctionComponent<Props> = (props) => {
                             className="form-control"
                             value={props.pedidoItem.valorUnitario}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                props.onChange(props.index, e.target.name, e.target.value);
+                                props.onChangeValor(parseFloat(e.target.value));
                             }}
                         />
                     </div>
                     <div className="col-md-2">
                         <Button
-                            label="Adicionar"
-                            className="btn btn-success mt-2"
+                            label="Remover"
+                            className="btn btn-danger mt-2"
                             onClick={props.onRemove}
                         />
                     </div>

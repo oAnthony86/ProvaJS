@@ -5,6 +5,7 @@ import Pedido from "../../models/pedido";
 import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
 import Produto from "../../models/produto";
+import PedidoItem from "../../models/pedidoItem";
 import { PedidoForm } from './pedidoForm';
 
 interface IProps {
@@ -41,7 +42,9 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 valorTotal: 0,
                 cliente: undefined,
                 transportadora: undefined,
-                pedidoItem: []
+                pedidoItem: new Array(
+                    new PedidoItem(0, 0, 0, 0, new Produto(0, '', '', 0)),
+                )
             },
             clienteList: [],
             transportadoraList: [],
@@ -120,7 +123,9 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                             valorTotal: 0,
                             cliente: undefined,
                             transportadora: undefined,
-                            pedidoItem: []
+                            pedidoItem: new Array(
+                                new PedidoItem(0, 0, 0, 0, new Produto(0, '', '', 0)),
+                            )
                         }
                     });
 

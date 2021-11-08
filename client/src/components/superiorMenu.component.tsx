@@ -23,6 +23,18 @@ export const Menu: React.FC = () => {
                     </li>
                 </ul>
             </div>
+            <div className="d-flex justify-content-end">
+                <ul className="nav navbar-nav">
+                    <li className="nav-item">
+                        {
+                            (localStorage.getItem("user"))
+                                ? <Link to={'./logoff'} className="nav-link float-right">Sair</Link>
+                                : <Link to={'./login'} className="nav-link float-right">Entrar</Link>
+                        }
+
+                    </li>
+                </ul>
+            </div>
         </nav>
     );
 }

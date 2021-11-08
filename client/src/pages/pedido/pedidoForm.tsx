@@ -6,6 +6,7 @@ import Transportadora from "../../models/transportadora";
 import Produto from "../../models/produto";
 import { Button } from '../../common/components/form';
 import { ProdutoFormAdd } from './produtoFormAdd';
+import PedidoItem from '../../models/pedidoItem';
 
 interface Props {
     pedido: Pedido;
@@ -18,13 +19,28 @@ interface Props {
 
 export const PedidoForm: React.FunctionComponent<Props> = (props) => {
 
-    function onChangeProduto(index: number, fieldName: string, value: string){
-
-    }
-
-    function onRemoveProduto(){
-
-    }
+    function addProduto() {
+        return props.pedido.pedidoItem.map(function (object, i) {
+            return <ProdutoFormAdd
+                key={i}
+                index={i + 1}
+                pedidoItem={object}
+                produtoList={props.produtoList}
+                onChangeProduto={(produtoId: number) => (
+                    object.produtoId = produtoId
+                )}
+                onChangeQuantidade={(quantidade: number) => (
+                    object.quantidade = quantidade
+                )}
+                onChangeValor={(valor: number) => (
+                    object.valorUnitario = valor
+                )}
+                onRemove={() => {
+                    props.pedido.pedidoItem.splice(i + 1, 1);
+                }}
+            />;
+        });
+    };
 
     return (
         <>
@@ -111,11 +127,9 @@ export const PedidoForm: React.FunctionComponent<Props> = (props) => {
                     />
                 </div>
 
-                {
-                    props.pedido.pedidoItem.map((obj, i) => {
-                        return <ProdutoFormAdd key={i} index={i} pedidoItem={obj} produtoList={props.produtoList} onChange={onChangeProduto} onRemove={onRemoveProduto}/>
-                    })
-                }
+                <div className="bg-light m-3">
+                    {addProduto()}
+                </div>
 
                 <Button
                     label="Save"

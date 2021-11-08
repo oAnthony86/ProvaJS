@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'toastr/build/toastr.min.css';
 import Menu from './components/superiorMenu.component';
 import Home from './components/home.component';
+import Login from './components/login.component';
+import Logoff from './components/logoff.component';
 
 import ClienteIndex from './pages/cliente/index';
 import ClienteCreate from './pages/cliente/create';
@@ -24,6 +26,15 @@ import PedidoCreate from './pages/pedido/create';
 import PedidoEdit from './pages/pedido/edit';
 import PedidoDetail from './pages/pedido/detail';
 
+const PrivateRoute = ({component, isAuthenticated, ...rest}: any) => {
+    const routeComponent = (props: any) => (
+        (localStorage.getItem("user"))
+            ? React.createElement(component, props)
+            : <Redirect to={{pathname: '/login'}}/>
+    );
+    return <Route {...rest} render={routeComponent}/>;
+};
+
 const App: React.FC = () => {
     return (
         <Router>
@@ -32,24 +43,26 @@ const App: React.FC = () => {
                 <br />
 
                 <Switch>
-                    <Route exact path='/cliente' component={ClienteIndex} />
-                    <Route path='/cliente/create' component={ClienteCreate} />
-                    <Route path='/cliente/edit/:id' component={ClienteEdit} />
+                    <PrivateRoute exact path='/cliente' component={ClienteIndex} />
+                    <PrivateRoute path='/cliente/create' component={ClienteCreate} />
+                    <PrivateRoute path='/cliente/edit/:id' component={ClienteEdit} />
 
-                    <Route exact path='/transportadora' component={TransportadoraIndex} />
-                    <Route path='/transportadora/create' component={TransportadoraCreate} />
-                    <Route path='/transportadora/edit/:id' component={TransportadoraEdit} />
+                    <PrivateRoute exact path='/transportadora' component={TransportadoraIndex} />
+                    <PrivateRoute path='/transportadora/create' component={TransportadoraCreate} />
+                    <PrivateRoute path='/transportadora/edit/:id' component={TransportadoraEdit} />
 
-                    <Route exact path='/produto' component={ProdutoIndex} />
-                    <Route path='/produto/create' component={ProdutoCreate} />
-                    <Route path='/produto/edit/:id' component={ProdutoEdit} />
+                    <PrivateRoute exact path='/produto' component={ProdutoIndex} />
+                    <PrivateRoute path='/produto/create' component={ProdutoCreate} />
+                    <PrivateRoute path='/produto/edit/:id' component={ProdutoEdit} />
 
-                    <Route exact path='/pedido' component={PedidoIndex} />
-                    <Route path='/pedido/create' component={PedidoCreate} />
-                    <Route path='/pedido/edit/:id' component={PedidoEdit} />
-                    <Route path='/pedido/detail/:id' component={PedidoDetail} />
+                    <PrivateRoute exact path='/pedido' component={PedidoIndex} />
+                    <PrivateRoute path='/pedido/create' component={PedidoCreate} />
+                    <PrivateRoute path='/pedido/edit/:id' component={PedidoEdit} />
+                    <PrivateRoute path='/pedido/detail/:id' component={PedidoDetail} />
 
-                    <Route path='/' component={Home} />
+                    <Route exact path='/login' component={Login} />
+                    <PrivateRoute exact path='/logoff' component={Logoff} />
+                    <PrivateRoute path='/' component={Home} />
                 </Switch>
             </div>
         </Router>
