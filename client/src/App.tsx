@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'toastr/build/toastr.min.css';
 import Menu from './components/superiorMenu.component';
 import Home from './components/home.component';
+import Register from './components/register.component';
 import Login from './components/login.component';
 import Logoff from './components/logoff.component';
 
@@ -61,6 +62,7 @@ const App: React.FC = () => {
                     <PrivateRoute path='/pedido/detail/:id' component={PedidoDetail} />
 
                     <Route exact path='/login' component={Login} />
+                    <Route exact path="/register" component={Register} />
                     <PrivateRoute exact path='/logoff' component={Logoff} />
                     <PrivateRoute path='/' component={Home} />
                 </Switch>
