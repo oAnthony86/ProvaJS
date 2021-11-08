@@ -5,7 +5,6 @@ import Pedido from "../../models/pedido";
 import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
 import Produto from "../../models/produto";
-import PedidoItem from "../../models/pedidoItem";
 import { PedidoForm } from './pedidoForm';
 
 interface IProps {

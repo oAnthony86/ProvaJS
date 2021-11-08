@@ -5,8 +5,6 @@ import Cliente from "../../models/cliente";
 import Transportadora from "../../models/transportadora";
 import Produto from "../../models/produto";
 import { Button } from '../../common/components/form';
-import { ProdutoFormAdd } from './produtoFormAdd';
-import PedidoItem from '../../models/pedidoItem';
 
 interface Props {
     pedido: Pedido;
@@ -18,29 +16,6 @@ interface Props {
 }
 
 export const PedidoForm: React.FunctionComponent<Props> = (props) => {
-
-    function addProduto() {
-        return props.pedido.pedidoItem.map(function (object, i) {
-            return <ProdutoFormAdd
-                key={i}
-                index={i + 1}
-                pedidoItem={object}
-                produtoList={props.produtoList}
-                onChangeProduto={(produtoId: number) => (
-                    object.produtoId = produtoId
-                )}
-                onChangeQuantidade={(quantidade: number) => (
-                    object.quantidade = quantidade
-                )}
-                onChangeValor={(valor: number) => (
-                    object.valorUnitario = valor
-                )}
-                onRemove={() => {
-                    props.pedido.pedidoItem.splice(i + 1, 1);
-                }}
-            />;
-        });
-    };
 
     return (
         <>
