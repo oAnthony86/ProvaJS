@@ -120,26 +120,26 @@ export default class PedidoEdit extends React.Component<IProps, IState> {
 
                     var pedido = new Pedido(
                         p.id,
-                        p.clienteId,
-                        p.transportadoraId,
-                        this.getParsedDate(p.dataEmissao),
-                        this.getParsedDate(p.dataEntrega),
-                        p.valorTotal,
+                        p.ClienteId,
+                        p.TransportadoraId,
+                        this.getParsedDate(p.DataEmissao),
+                        this.getParsedDate(p.DataEntrega),
+                        p.ValorTotal,
                         new Cliente(
                             p.cliente.id,
-                            p.cliente.nomeCompleto,
+                            p.cliente.nomecompleto,
                             p.cliente.cpf,
-                            p.cliente.dataNascimento,
+                            p.cliente.datanascimento,
                             p.cliente.sexo,
                             p.cliente.cidade,
                             p.cliente.estado
                         ),
                         new Transportadora(
                             p.transportadora.id,
-                            p.transportadora.cnpj,
-                            p.transportadora.descricao,
-                            p.transportadora.cidade,
-                            p.transportadora.estado
+                            p.transportadora.CNPJ,
+                            p.transportadora.Descricao,
+                            p.transportadora.Cidade,
+                            p.transportadora.Estado
                         ),
                         []
                     );

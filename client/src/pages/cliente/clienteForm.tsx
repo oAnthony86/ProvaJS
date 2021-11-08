@@ -11,6 +11,10 @@ interface Props {
 
 export const ClienteForm: React.FunctionComponent<Props> = (props) => {
 
+    if(props.cliente.sexo === ''){
+        props.cliente.sexo = 'M';
+    }
+
     return (
         <>
             <h3 className="text-center">Gerenciamento de Cliente</h3>
@@ -23,6 +27,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="nomeCompleto">Nome Completo</label>
                     <input
+                        required
                         type="text"
                         name="nomeCompleto"
                         className="form-control"
@@ -37,6 +42,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="cpf">CPF</label>
                     <input
+                        required
                         type="number"
                         name="cpf"
                         className="form-control"
@@ -51,6 +57,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="dataNascimento">Data de Nascimento</label>
                     <input
+                        required
                         type="date"
                         name="dataNascimento"
                         className="form-control"
@@ -64,6 +71,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="sexo">Sexo ('M', 'F' ou 'O')</label>
                     <select
+                        required
                         name="sexo"
                         className="form-control"
                         value={props.cliente.sexo}
@@ -80,6 +88,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="cidade">Cidade</label>
                     <input
+                        required
                         type="text"
                         name="cidade"
                         className="form-control"
@@ -94,6 +103,7 @@ export const ClienteForm: React.FunctionComponent<Props> = (props) => {
                 <div className="form-group">
                     <label htmlFor="estado">Estado</label>
                     <input
+                        required
                         type="text"
                         name="estado"
                         className="form-control"

@@ -33,40 +33,6 @@ class PedidoIndex extends React.Component<IProps, IState> {
         };
     }
 
-    private getParsedDate(strDate: string) {
-        console.log(`${strDate.substring(0, 4)}/${strDate.substring(5, 7)}/${strDate.substring(8, 10)}`);
-
-        return `${strDate.substring(0, 4)}-${strDate.substring(5, 7)}-${strDate.substring(8, 10)}`;
-    }
-
-    public getCliente(clienteId: number) {
-        BaseService.get<Cliente>('/Cliente', clienteId).then(
-            (rp) => {
-                if (rp.Status) {
-                    const p = rp.Data;
-                    return new Cliente(p.id, p.nomecompleto, p.cpf, this.getParsedDate(p.datanascimento), p.sexo, p.cidade, p.estado);
-                } else {
-                    return undefined;
-                }
-            }
-
-        );
-    }
-
-    private getTransportadora(transportadoraId: number) {
-        BaseService.get<Transportadora>('/Transportadora', transportadoraId).then(
-            (rp) => {
-                if (rp.Status) {
-                    const p = rp.Data;
-                    return new Transportadora(p.id, p.CNPJ, p.Descricao, p.Cidade, p.Estado);
-                } else {
-                    return undefined;
-                }
-            }
-
-        );
-    }
-
     public componentDidMount() {
         BaseService.getAll<Pedido>("/Pedido").then((rp) => {
             if (rp.Status) {
@@ -76,26 +42,26 @@ class PedidoIndex extends React.Component<IProps, IState> {
                 (data || []).forEach((p: any) => {
                     var pedido = new Pedido(
                         p.id,
-                        p.clienteId,
-                        p.transportadoraId,
-                        p.dataEmissao,
-                        p.dataEntrega,
-                        p.valorTotal,
+                        p.ClienteId,
+                        p.TransportadoraId,
+                        p.DataEmissao,
+                        p.DataEntrega,
+                        p.ValorTotal,
                         new Cliente(
                             p.cliente.id,
-                            p.cliente.nomeCompleto,
+                            p.cliente.nomecompleto,
                             p.cliente.cpf,
-                            p.cliente.dataNascimento,
+                            p.cliente.datanascimento,
                             p.cliente.sexo,
                             p.cliente.cidade,
                             p.cliente.estado
                         ),
                         new Transportadora(
                             p.transportadora.id,
-                            p.transportadora.cnpj,
-                            p.transportadora.descricao,
-                            p.transportadora.cidade,
-                            p.transportadora.estado
+                            p.transportadora.CNPJ,
+                            p.transportadora.Descricao,
+                            p.transportadora.Cidade,
+                            p.transportadora.Estado
                         ),
                         []
                     );

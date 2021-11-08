@@ -21,7 +21,7 @@ export default class BaseService {
                 if (result) {
                     return new Response(true, result as Array<T>, "Success", "");
                 } else {
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
+                    const msg = (result.message && result.message.length > 0) ? result.message : "Error";
                     return new Response(false, null, "Error", msg);
                 }
 
@@ -39,7 +39,7 @@ export default class BaseService {
                 if (result) {
                     return new Response(true, result, "Success", "");
                 } else {
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
+                    const msg = (result.message && result.message.length > 0) ? result.message : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -56,7 +56,7 @@ export default class BaseService {
                 if (result) {
                     return new Response(true, result.data, "Success", "");
                 } else {
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
+                    const msg = (result.message && result.message.length > 0) ? result.message : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -67,14 +67,13 @@ export default class BaseService {
     }
 
     public static create<T>(url: string, obj: T): Promise<Response> {
-
         let res = axios.post(this.baseURL + url, obj)
             .then(response => {
                 const result = response.data;
                 if (result) {
                     return new Response(true, result.data, "Success", "");
                 } else {
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
+                    const msg = (result.message && result.message.length > 0) ? result.message : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
@@ -85,14 +84,13 @@ export default class BaseService {
     }
 
     public static update<T>(url: string, obj: T): Promise<Response> {
-
         let res = axios.put(this.baseURL + url, obj)
             .then(response => {
                 const result = response.data;
                 if (result) {
                     return new Response(true, result.data, "Success", "");
                 } else {
-                    const msg = (result.messageList && result.messageList.length > 0) ? result.messageList[0].text : "Error";
+                    const msg = (result.message && result.message.length > 0) ? result.message : "Error";
                     return new Response(false, null, "Error", msg);
                 }
             })
