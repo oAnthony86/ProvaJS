@@ -1,33 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Pedido;
 use Illuminate\Http\Request;
 use Exception;
 
 class ControllerPedido extends Controller
 {
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
-    // public function index() {
-    //     return view('')
-    // }
-
-    public function store(Request $request) {
-        try{
+    public function store(Request $request)
+    {
+        try {
             $pedido = Pedido::create([
-                'ClienteId' => $request->ClienteId,
-                'TransportadoraId' => $request->TransportadoraId,
-                'DataEmissao' => $request->DataEmissao,
-                'DataEntrega' => $request->DataEntrega,
-                'ValorTotal' => $request->ValorTotal
+                'ClienteId' => $request->clienteId,
+                'TransportadoraId' => $request->transportadoraId,
+                'DataEmissao' => $request->dataEmissao,
+                'DataEntrega' => $request->dataEntrega,
+                'ValorTotal' => $request->valorTotal
             ]);
+
             return response()->json([
                 'data' => $pedido
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha no cadastro de pedido",
                 'error'   => $e->getMessage()
@@ -35,18 +34,20 @@ class ControllerPedido extends Controller
         }
     }
 
-    public function update(Request $request) {
-        try{
+    public function update(Request $request)
+    {
+        try {
             $pedido = Pedido::where('id', $request->id)->update([
-                'datanascimento' => $request->datanascimento,
-                'DataEmissao' => $request->DataEmissao,
-                'DataEntrega' => $request->DataEntrega,
-                'ValorTotal' => $request->ValorTotal
+                'ClienteId' => $request->clienteId,
+                'TransportadoraId' => $request->transportadoraId,
+                'DataEmissao' => $request->dataEmissao,
+                'DataEntrega' => $request->dataEntrega,
+                'ValorTotal' => $request->valorTotal
             ]);
             return response()->json([
                 'data' => $pedido
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao atualizar pedido",
                 'error'   => $e->getMessage()
@@ -54,13 +55,14 @@ class ControllerPedido extends Controller
         }
     }
 
-    public function delete(Request $request) {
-        try{
-            $pedido = Pedido::where('id', $request->id)->delete();
+    public function delete($id)
+    {
+        try {
+            $pedido = Pedido::where('id', $id)->delete();
             return response()->json([
                 'data' => $pedido
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao deletar pedido",
                 'error'   => $e->getMessage()
@@ -68,10 +70,11 @@ class ControllerPedido extends Controller
         }
     }
 
-    public function list(Request $request) {
+    public function list($id = null)
+    {
         try {
-            if (isset($request->pedido_id)) {
-                $pedido = Pedido::where('id', $request->produto_id)->get()->first();
+            if ($id != null) {
+                $pedido = Pedido::where('id', $id)->get()->first();
                 return response()->json([
                     'data' => $pedido
                 ], 200);
@@ -81,16 +84,11 @@ class ControllerPedido extends Controller
                     'data' => $pedidos
                 ], 200);
             }
-
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao buscar lista de Pedidos",
                 'error' => $e->getMessage()
             ], 400);
         }
-
     }
-
-
-    
 }

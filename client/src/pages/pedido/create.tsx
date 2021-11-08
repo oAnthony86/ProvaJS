@@ -53,7 +53,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 const data = rp.Data;
                 var clienteLista: Array<Cliente> = [];
                 (data || []).forEach((p: any) => {
-                    clienteLista.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
+                    clienteLista.push(new Cliente(p.id, p.nomecompleto, p.cpf, p.datanascimento, p.sexo, p.cidade, p.estado));
                 });
                 this.setState({
                     ...this.state,
@@ -67,7 +67,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 const data = rp.Data;
                 var transportadoraLista: Array<Transportadora> = [];
                 (data || []).forEach((p: any) => {
-                    transportadoraLista.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
+                    transportadoraLista.push(new Transportadora(p.id, p.CNPJ, p.Descricao, p.Cidade, p.Estado));
                 });
                 this.setState({
                     ...this.state,
@@ -81,7 +81,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 const data = rp.Data;
                 var produtoLista: Array<Produto> = [];
                 (data || []).forEach((p: any) => {
-                    produtoLista.push(new Produto(p.id, p.codigoBarra, p.descricao, p.preco));
+                    produtoLista.push(new Produto(p.id, p.CodigoBarra, p.Descricao, p.Preco));
                 });
                 this.setState({
                     ...this.state,

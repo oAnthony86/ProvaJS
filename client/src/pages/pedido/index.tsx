@@ -33,6 +33,40 @@ class PedidoIndex extends React.Component<IProps, IState> {
         };
     }
 
+    private getParsedDate(strDate: string) {
+        console.log(`${strDate.substring(0, 4)}/${strDate.substring(5, 7)}/${strDate.substring(8, 10)}`);
+
+        return `${strDate.substring(0, 4)}-${strDate.substring(5, 7)}-${strDate.substring(8, 10)}`;
+    }
+
+    public getCliente(clienteId: number) {
+        BaseService.get<Cliente>('/Cliente', clienteId).then(
+            (rp) => {
+                if (rp.Status) {
+                    const p = rp.Data;
+                    return new Cliente(p.id, p.nomecompleto, p.cpf, this.getParsedDate(p.datanascimento), p.sexo, p.cidade, p.estado);
+                } else {
+                    return undefined;
+                }
+            }
+
+        );
+    }
+
+    private getTransportadora(transportadoraId: number) {
+        BaseService.get<Transportadora>('/Transportadora', transportadoraId).then(
+            (rp) => {
+                if (rp.Status) {
+                    const p = rp.Data;
+                    return new Transportadora(p.id, p.CNPJ, p.Descricao, p.Cidade, p.Estado);
+                } else {
+                    return undefined;
+                }
+            }
+
+        );
+    }
+
     public componentDidMount() {
         BaseService.getAll<Pedido>("/Pedido").then((rp) => {
             if (rp.Status) {

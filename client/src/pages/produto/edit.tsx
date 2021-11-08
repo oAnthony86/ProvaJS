@@ -62,7 +62,7 @@ export default class ProdutoEdit extends React.Component<IProps, IState> {
                 if (rp.Status) {
                     const p = rp.Data;
                     console.log(p.sexo)
-                    this.setState({ produto: new Produto(p.id, p.codigoBarra, p.descricao, p.preco) });
+                    this.setState({ produto: new Produto(p.id, p.CodigoBarra, p.Descricao, p.Preco) });
                 } else {
                     toastr.error(rp.Messages);
                     console.log("Messages: " + rp.Messages);

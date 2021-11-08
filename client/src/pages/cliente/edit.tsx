@@ -67,8 +67,7 @@ export default class ClienteEdit extends React.Component<IProps, IState> {
             (rp) => {
                 if (rp.Status) {
                     const p = rp.Data;
-                    console.log(p.sexo)
-                    this.setState({ cliente: new Cliente(p.id, p.nomeCompleto, p.cpf, this.getParsedDate(p.dataNascimento), p.sexo, p.cidade, p.estado) });
+                    this.setState({ cliente: new Cliente(p.id, p.nomecompleto, p.cpf, this.getParsedDate(p.datanascimento), p.sexo, p.cidade, p.estado) });
                 } else {
                     toastr.error(rp.Messages);
                     console.log("Messages: " + rp.Messages);

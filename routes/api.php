@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerCliente;
 use App\Http\Controllers\ControllerTransportadora;
 use App\Http\Controllers\ControllerProduto;
+use App\Http\Controllers\ControllerPedido;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,17 +23,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/cliente/{id?}',        [ControllerCliente::class, 'list'])->name('api.clientes.list');
-Route::post('/cliente',             [ControllerCliente::class, 'store'])->name('api.clientes.store');
-Route::put('/cliente',              [ControllerCliente::class, 'update'])->name('api.clientes.update');
-Route::delete('/cliente',           [ControllerCliente::class, 'delete'])->name('api.clientes.delete');
+Route::get('/Cliente/{id?}',            [ControllerCliente::class, 'list'])         ->name('api.clientes.list');
+Route::post('/Cliente',                 [ControllerCliente::class, 'store'])        ->name('api.clientes.store');
+Route::put('/Cliente',                  [ControllerCliente::class, 'update'])       ->name('api.clientes.update');
+Route::delete('/Cliente/{id}',          [ControllerCliente::class, 'delete'])       ->name('api.clientes.delete');
 
-Route::get('/transportadora/{id?}', [ControllerTransportadora::class, 'list'])->name('api.transportadora.list');
-Route::post('/transportadora',      [ControllerTransportadora::class, 'store'])->name('api.transportadora.store');
-Route::put('/transportadora',       [ControllerTransportadora::class, 'update'])->name('api.transportadora.update');
-Route::delete('/transportadora',    [ControllerTransportadora::class, 'delete'])->name('api.transportadora.delete');
+Route::get('/Transportadora/{id?}',     [ControllerTransportadora::class, 'list'])  ->name('api.transportadora.list');
+Route::post('/Transportadora',          [ControllerTransportadora::class, 'store']) ->name('api.transportadora.store');
+Route::put('/Transportadora',            [ControllerTransportadora::class, 'update'])->name('api.transportadora.update');
+Route::delete('/Transportadora/{id}',   [ControllerTransportadora::class, 'delete'])->name('api.transportadora.delete');
 
-Route::get('/produto/{id?}',        [ControllerProduto::class, 'list'])->name('api.produto.list');
-Route::post('/produto',             [ControllerProduto::class, 'store'])->name('api.produto.store');
-Route::put('/produto',              [ControllerProduto::class, 'update'])->name('api.produto.update');
-Route::delete('/produto',           [ControllerProduto::class, 'delete'])->name('api.produto.delete');
+Route::get('/Produto/{id?}',            [ControllerProduto::class, 'list'])         ->name('api.produto.list');
+Route::post('/Produto',                 [ControllerProduto::class, 'store'])        ->name('api.produto.store');
+Route::put('/Produto',                  [ControllerProduto::class, 'update'])       ->name('api.produto.update');
+Route::delete('/Produto/{id}',          [ControllerProduto::class, 'delete'])       ->name('api.produto.delete');
+
+Route::get('/Pedido/{id?}',             [ControllerPedido::class, 'list'])          ->name('api.pedido.list');
+Route::post('/Pedido',                  [ControllerPedido::class, 'store'])         ->name('api.pedido.store');
+Route::put('/Pedido',                   [ControllerPedido::class, 'update'])        ->name('api.pedido.update');
+Route::delete('/Pedido/{id}',           [ControllerPedido::class, 'delete'])        ->name('api.pedido.delete');

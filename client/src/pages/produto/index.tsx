@@ -36,7 +36,7 @@ class ProdutoIndex extends React.Component<IProps, IState> {
                 const listProdutos = new Array<Produto>();
 
                 (data || []).forEach((p: any) => {
-                    listProdutos.push(new Produto(p.id, p.codigoBarra, p.descricao, p.preco));
+                    listProdutos.push(new Produto(p.id, p.CodigoBarra, p.Descricao, p.Preco));
                 });
 
                 this.setState({ listProdutos: listProdutos });

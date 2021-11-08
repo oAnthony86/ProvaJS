@@ -36,7 +36,7 @@ class ClienteIndex extends React.Component<IProps, IState> {
                 const listClientes = new Array<Cliente>();
 
                 (data || []).forEach((p: any) => {
-                    listClientes.push(new Cliente(p.id, p.nomeCompleto, p.cpf, p.dataNascimento, p.sexo, p.cidade, p.estado));
+                    listClientes.push(new Cliente(p.id, p.nomecompleto, p.cpf, p.datanascimento, p.sexo, p.cidade, p.estado));
                 });
 
                 this.setState({ listClientes: listClientes });
