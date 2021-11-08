@@ -83,53 +83,6 @@ export const PedidoShow: React.FunctionComponent<Props> = (props) => {
                         value={props.pedido.valorTotal}
                     />
                 </div>
-
-                <div className="bg-light m-3">
-                    <h3>Produtos:</h3>
-                    <hr />
-
-                    {
-                        props.pedido.pedidoItem.map((obj, i) => {
-                            return (
-                                <div key={i} className="container">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <label htmlFor="produto">Produto</label>
-                                            <input
-                                                type="text"
-                                                name="produto"
-                                                className="form-control"
-                                                disabled
-                                                value={obj.produto.descricao}
-                                            />
-                                        </div>
-                                        <div className="col-md-3">
-                                            <label htmlFor="quantidade">Quantidade</label>
-                                            <input
-                                                type="text"
-                                                name="quantidade"
-                                                className="form-control"
-                                                disabled
-                                                value={obj.quantidade}
-                                            />
-                                        </div>
-                                        <div className="col-md-3">
-                                            <label htmlFor="valorUnitario">Valor Unitário</label>
-                                            <input
-                                                type="text"
-                                                name="valorUnitario"
-                                                className="form-control"
-                                                disabled
-                                                value={obj.valorUnitario}
-                                            />
-                                        </div>
-                                    </div>
-                                    <hr />
-                                </div>
-                            )
-                        })
-                    }
-                </div>
             </form>
         </>
     );

@@ -42,9 +42,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                 valorTotal: 0,
                 cliente: undefined,
                 transportadora: undefined,
-                pedidoItem: new Array(
-                    new PedidoItem(0, 0, 0, 0, new Produto(0, '', '', 0)),
-                )
+                pedidoItem: []
             },
             clienteList: [],
             transportadoraList: [],
@@ -123,9 +121,7 @@ export default class ProdutoCreate extends React.Component<IProps, IState> {
                             valorTotal: 0,
                             cliente: undefined,
                             transportadora: undefined,
-                            pedidoItem: new Array(
-                                new PedidoItem(0, 0, 0, 0, new Produto(0, '', '', 0)),
-                            )
+                            pedidoItem: []
                         }
                     });
 

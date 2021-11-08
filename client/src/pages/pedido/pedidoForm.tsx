@@ -127,10 +127,6 @@ export const PedidoForm: React.FunctionComponent<Props> = (props) => {
                     />
                 </div>
 
-                <div className="bg-light m-3">
-                    {addProduto()}
-                </div>
-
                 <Button
                     label="Save"
                     className="btn btn-success mt-2"
