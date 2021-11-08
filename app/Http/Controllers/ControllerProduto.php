@@ -14,16 +14,16 @@ class ControllerProduto extends Controller
 
     public function store(Request $request)
     {
-        try{
-            $produto = Produto::store([
+        try {
+            $produto = Produto::create([
                 'CodigoBarra' => $request->codigoBarra,
                 'Descricao' => $request->descricao,
                 'Preco' => $request->preco
             ]);
             return response()->json([
                 'data' => $produto
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha no cadastro de produto",
                 'error'   => $e->getMessage()
@@ -33,7 +33,7 @@ class ControllerProduto extends Controller
 
     public function update(Request $request)
     {
-        try{
+        try {
             $produto = Produto::where('id', $request->id)->update([
                 'CodigoBarra' => $request->codigoBarra,
                 'Descricao' => $request->descricao,
@@ -41,8 +41,8 @@ class ControllerProduto extends Controller
             ]);
             return response()->json([
                 'data' => $produto
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao atualizar produto",
                 'error'   => $e->getMessage()
@@ -50,14 +50,14 @@ class ControllerProduto extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        try{
-            $produto = Produto::where('id', $request->id)->delete();
+        try {
+            $produto = Produto::where('id', $id)->delete();
             return response()->json([
                 'data' => $produto
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao deletar produto",
                 'error'   => $e->getMessage()
@@ -65,11 +65,11 @@ class ControllerProduto extends Controller
         }
     }
 
-    public function list(Request $request)
+    public function list($id = null)
     {
         try {
-            if (isset($request->id)) {
-                $produto = Produto::where('id', $request->id)->get()->first();
+            if ($id) {
+                $produto = Produto::where('id', $id)->get()->first();
                 return response()->json([
                     'data' => $produto
                 ], 200);

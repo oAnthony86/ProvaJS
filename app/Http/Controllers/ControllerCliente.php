@@ -1,19 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Exception;
 
 class ControllerCliente extends Controller
 {
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
-    public function store(Request $request) {
-        try{
-            $cliente = Cliente::store([
+    public function store(Request $request)
+    {
+        try {
+            $cliente = Cliente::create([
                 'NomeCompleto'   => $request->nomeCompleto,
                 'CPF'            => $request->cpf,
                 'DataNascimento' => $request->dataNascimento,
@@ -23,8 +25,8 @@ class ControllerCliente extends Controller
             ]);
             return response()->json([
                 'data' => $cliente
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha no cadastro de cliente",
                 'error'   => $e->getMessage()
@@ -32,8 +34,9 @@ class ControllerCliente extends Controller
         }
     }
 
-    public function update(Request $request) {
-        try{
+    public function update(Request $request)
+    {
+        try {
             $cliente = Cliente::where('id', $request->id)->update([
                 'NomeCompleto'   => $request->nomeCompleto,
                 'CPF'            => $request->cpf,
@@ -44,8 +47,8 @@ class ControllerCliente extends Controller
             ]);
             return response()->json([
                 'data' => $cliente
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao atualizar cliente",
                 'error'   => $e->getMessage()
@@ -53,13 +56,14 @@ class ControllerCliente extends Controller
         }
     }
 
-    public function delete(Request $request) {
-        try{
-            $cliente =Cliente::where('id', $request->id)->delete();
+    public function delete($id)
+    {
+        try {
+            $cliente = Cliente::where('id', $id)->delete();
             return response()->json([
                 'data' => $cliente
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao deletar cliente",
                 'error'   => $e->getMessage()
@@ -67,10 +71,11 @@ class ControllerCliente extends Controller
         }
     }
 
-    public function list(Request $request) {
+    public function list($id = null)
+    {
         try {
-            if (isset($request->id)) {
-                $cliente = Cliente::where('id', $request->id)->get()->first();
+            if ($id != null) {
+                $cliente = Cliente::where('id', $id)->get()->first();
                 return response()->json([
                     'data' => $cliente
                 ], 200);
@@ -80,16 +85,11 @@ class ControllerCliente extends Controller
                     'data' => $clientes
                 ], 200);
             }
-
         } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao buscar lista de clientes",
                 'error' => $e->getMessage()
             ], 400);
         }
-
     }
-
-
-
 }

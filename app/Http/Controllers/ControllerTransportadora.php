@@ -14,8 +14,8 @@ class ControllerTransportadora extends Controller
 
     public function store(Request $request)
     {
-        try{
-            $transportadora = Transportadora::store([
+        try {
+            $transportadora = Transportadora::create([
                 'CNPJ'      => $request->cnpj,
                 'Descricao' => $request->descricao,
                 'Cidade'    => $request->cidade,
@@ -23,18 +23,18 @@ class ControllerTransportadora extends Controller
             ]);
             return response()->json([
                 'data' => $transportadora
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha no cadastro de transportadora",
                 'error'   => $e->getMessage()
             ], 400);
-    }
+        }
     }
 
     public function update(Request $request)
-    {   
-        try{
+    {
+        try {
             $transportadora = Transportadora::where('id', $request->id)->update([
                 'CNPJ'      => $request->cnpj,
                 'Descricao' => $request->descricao,
@@ -43,8 +43,8 @@ class ControllerTransportadora extends Controller
             ]);
             return response()->json([
                 'data' => $transportadora
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha na atualização de transportadora",
                 'error'   => $e->getMessage()
@@ -52,14 +52,14 @@ class ControllerTransportadora extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        try{
-            $transportadora = Transportadora::where('id', $request->id)->delete();
+        try {
+            $transportadora = Transportadora::where('id', $id)->delete();
             return response()->json([
                 'data' => $transportadora
-            ],200);
-        }catch (Exception $e) {
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'message' => "Falha ao deletar transportadora",
                 'error'   => $e->getMessage()
@@ -67,11 +67,11 @@ class ControllerTransportadora extends Controller
         }
     }
 
-    public function list(Request $request)
+    public function list($id = null)
     {
         try {
-            if (isset($request->id)) {
-                $transportadora = Transportadora::where('id', $request->id)->get()->first();
+            if ($id != null) {
+                $transportadora = Transportadora::where('id', $id)->get()->first();
                 return response()->json([
                     'data' => $transportadora
                 ], 200);

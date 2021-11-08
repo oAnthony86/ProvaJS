@@ -36,7 +36,7 @@ class TransportadoraIndex extends React.Component<IProps, IState> {
                 const listTransportadoras = new Array<Transportadora>();
 
                 (data || []).forEach((p: any) => {
-                    listTransportadoras.push(new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado));
+                    listTransportadoras.push(new Transportadora(p.id, p.CNPJ, p.Descricao, p.Cidade, p.Estado));
                 });
 
                 this.setState({ listTransportadoras: listTransportadoras });

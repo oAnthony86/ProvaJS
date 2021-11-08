@@ -60,7 +60,7 @@ export default class TransportadoraEdit extends React.Component<IProps, IState> 
                 if (rp.Status) {
                     const p = rp.Data;
                     console.log(p.sexo)
-                    this.setState({ transportadora: new Transportadora(p.id, p.cnpj, p.descricao, p.cidade, p.estado) });
+                    this.setState({ transportadora: new Transportadora(p.id, p.CNPJ, p.Descricao, p.Cidade, p.Estado) });
                 } else {
                     toastr.error(rp.Messages);
                     console.log("Messages: " + rp.Messages);
